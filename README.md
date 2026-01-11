@@ -1,4 +1,4 @@
-# XianyuServiceBot
+# XianyuAgentBot
 
 闲鱼智能客服系统，基于 LangGraph 工作流的 AI 自动值守方案，专注于软件开发/程序定制服务场景。
 
