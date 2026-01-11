@@ -78,9 +78,13 @@ python main.py
 
 ## 贡献者
 
-<a href="https://github.com/Gone"><img src="https://github.com/Gone.png" width="50" height="50" alt="Gone" /></a>
-<a href="https://github.com/changan593"><img src="https://github.com/changan593.png" width="50" height="50" alt="changan593" /></a>
-<a href="https://github.com/anthropics"><img src="https://github.com/anthropics.png" width="50" height="50" alt="Claude" /></a>
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/gonezc"><img src="https://github.com/gonezc.png" width="50" height="50" alt="gonezc" /><br /><sub><b>gonezc</b></sub></a></td>
+    <td align="center"><a href="https://github.com/changan593"><img src="https://github.com/changan593.png" width="50" height="50" alt="changan593" /><br /><sub><b>changan593</b></sub></a></td>
+    <td align="center"><a href="https://claude.ai"><img src="https://www.anthropic.com/images/icons/apple-touch-icon.png" width="50" height="50" alt="Claude" /><br /><sub><b>Claude</b></sub></a></td>
+  </tr>
+</table>
 
 ## 致谢
 
