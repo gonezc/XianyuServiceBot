@@ -1,6 +1,6 @@
 # Xianyu AutoAgent - 闲鱼智能客服
 
-基于 [shaxiu/XianyuAutoAgent](https://github.com/shaxiu/XianyuAutoAgent) 二次开发，专注于软件开发/程序定制服务场景。
+基于[shaxiu/XianyuAutoAgent](https://github.com/shaxiu/XianyuAutoAgent)重构，专注于软件开发/程序定制服务场景。
 
 ## 主要改动
 
