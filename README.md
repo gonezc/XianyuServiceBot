@@ -80,7 +80,6 @@ python main.py
 ## 致谢
 
 - 原项目：[shaxiu/XianyuAutoAgent](https://github.com/shaxiu/XianyuAutoAgent)
-- [changan593](https://github.com/changan593)
 
 ## 声明
 
