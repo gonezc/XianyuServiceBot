@@ -38,8 +38,7 @@
 │   └── message_handler.py
 ├── storage/             # 数据存储
 ├── prompts/             # 提示词配置
-├── knowledge/           # 案例库
-└── images/              # 效果图（不开源）
+└── knowledge/           # 知识库
 ```
 
 ## 快速运行
