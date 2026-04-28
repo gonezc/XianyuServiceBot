@@ -16,6 +16,8 @@ knowledge/.embeddings_cache.pkl
 # 文档和工具脚本
 *.md
 !README.md
+!docs/
+!docs/*.md
 figs4md/
 remove_emoji.py
 run_local_chat.bat

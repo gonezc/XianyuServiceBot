@@ -1,47 +1,18 @@
 # XianyuAgentBot
 
-闲鱼智能客服系统，基于 LangGraph 工作流的 AI 自动值守方案，专注于软件开发/程序定制服务场景。
+闲鱼 AI 售前客服原型，面向软件开发与程序定制场景。
 
-## 核心特性
+它当前解决的是一条很具体的链路：接入闲鱼消息，维护对话状态，结合案例库给出回复，并把关键会话、议价和成交信息沉淀下来。
 
-- 多阶段对话管理：基于 LangGraph 状态机实现开场、需求收集、询价、议价、成交引导的完整销售流程
-- 知识库检索：FAISS 向量检索支持案例库匹配，提供智能定价参考
-- 情感分析：实时分析买家情绪，动态调整回复策略
-- 对话持久化：SQLite 存储完整对话历史，支持上下文感知
-- 飞书通知：订单确认时自动发送飞书卡片通知
-- 人工接管：支持关键词切换人工/AI 模式
-- 本地调试：提供独立测试环境，无需连接闲鱼平台即可调试
+## 当前实现
 
-## 技术框架
+- 工作流：`LangGraph` 驱动多阶段售前对话
+- 接入：闲鱼 `WebSocket` 实时消息
+- 存储：`SQLite` 保存消息、线程、商品和调用指标
+- 案例检索：当前代码使用 `FAISS` 优先，失败时降级关键词匹配
+- 支撑能力：情绪分析、人工接管、飞书通知、本地调试
 
-| 模块     | 技术栈                            |
-| -------- | --------------------------------- |
-| LLM调用  | Chat Completions API              |
-| 工作流   | LangGraph                         |
-| 向量检索 | FAISS                             |
-| 情感分析 | Erlangshen-Roberta-110M-Sentiment |
-| 数据存储 | SQLite                            |
-| 平台通信 | WebSocket                         |
-
-项目结构：
-
-```
-├── main.py              # 生产环境入口
-├── local_chat.py        # 本地测试环境
-├── agent/               # Agent 核心模块
-│   ├── graph.py         # LangGraph 工作流
-│   ├── knowledge.py     # 知识库 RAG
-│   ├── emotion.py       # 情感分析
-│   └── tools.py         # LLM 工具
-├── core/                # 闲鱼平台集成
-│   ├── websocket_client.py
-│   └── message_handler.py
-├── storage/             # 数据存储
-├── prompts/             # 提示词配置
-└── knowledge/           # 知识库
-```
-
-## 快速运行
+## 快速开始
 
 1. 安装依赖
 
@@ -49,62 +20,80 @@
 pip install -r requirements.txt
 ```
 
-2. 配置环境变量
+2. 配置 `.env`
 
-创建 `.env` 文件：
+至少需要：
 
+```env
+API_KEY=你的模型服务密钥
+MODEL_BASE_URL=模型兼容接口地址
+MODEL_NAME=qwen-max
+COOKIES_STR=闲鱼网页端 Cookie
 ```
-API_KEY=你的LLM API密钥
-COOKIES_STR=闲鱼网页端cookies
-MODEL_BASE_URL=模型服务地址
-MODEL_NAME=模型名称
+
+常用可选项：
+
+```env
+EMBEDDING_MODEL=text-embedding-v3
+FEISHU_WEBHOOK_URL=
+LOG_LEVEL=DEBUG
+MANUAL_MODE_TIMEOUT=3600
+THREAD_POOL_SIZE=8
+HEARTBEAT_INTERVAL=15
+HEARTBEAT_TIMEOUT=5
+TOKEN_REFRESH_INTERVAL=3600
+TOKEN_RETRY_INTERVAL=300
+MESSAGE_EXPIRE_TIME=300000
 ```
 
-COOKIES_STR 获取方式：闲鱼网页端 F12 打开控制台，Network - Fetch/XHR，复制任意请求的 Cookie。
-
-3. 运行
+3. 本地调试
 
 ```bash
-# 本地测试
 python local_chat.py
+```
 
-# 生产运行
+4. 连接闲鱼运行
+
+```bash
 python main.py
+```
+
+## 文档入口
+
+- [文档索引](docs/INDEX.md)
+- [当前设计真相](docs/SPEC-current.md)
+- [数据与存储](docs/DATABASE.md)
+- [运行与排障](docs/RUNBOOK.md)
+
+## 需求与迭代管理
+
+仓库内不再维护大量需求/实现拆分文档。
+
+- 长期稳定事实保留在 `README.md` 和 `docs/*.md`
+- 新需求、方案讨论、演进计划、验收项统一放到 GitHub Issues
+
+## 目录概览
+
+```text
+main.py                生产入口
+local_chat.py          本地对话调试入口
+agent/                 LangGraph 工作流、知识检索、情绪分析、通知
+core/                  闲鱼 WebSocket 接入与消息处理
+storage/               SQLite 存储
+knowledge/             案例与技能数据、FAISS 索引缓存
+prompts/               系统提示词
+docs/                  长期设计与运行文档
 ```
 
 ## 效果图
 
 ![开场](images/开场.png)
 
-<div align="center">开场</div>
-
 ![需求收集](images/需求收集.png)
-
-<div align="center">需求收集</div>
 
 ![定价议价](images/定价议价.png)
 
-<div align="center">询价议价</div>
-
 ![下单引导](images/下单引导.png)
-
-![后台通知](images/后台通知.png)
-
-<div align="center">成交引导</div>
-
-![日志](images/日志.png)
-
-<div align="center">后台日志</div>
-
-## 贡献者
-
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/gonezc"><img src="https://github.com/gonezc.png" width="50" height="50" alt="gonezc" /><br /><sub><b>gonezc</b></sub></a></td>
-    <td align="center"><a href="https://github.com/changan593"><img src="https://github.com/changan593.png" width="50" height="50" alt="changan593" /><br /><sub><b>changan593</b></sub></a></td>
-    <td align="center"><a href="https://claude.ai"><img src="https://avatars.githubusercontent.com/u/81847?v=4" width="50" height="50" alt="Claude" /><br /><sub><b>Claude</b></sub></a></td>
-  </tr>
-</table>
 
 ## 致谢
 
@@ -112,4 +101,4 @@ python main.py
 
 ## 声明
 
-本项目仅供学习交流，请遵守相关平台规则。
+本项目仅供学习交流，请遵守平台规则与账号安全要求。
