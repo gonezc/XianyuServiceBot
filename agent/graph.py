@@ -652,8 +652,8 @@ def process_message(graph, user_msg: str, item_desc: str = "",
         str: AI回复
         或 (str, dict): (AI回复, 完整状态) 如果 return_state=True
     """
-    from .storage import get_store
-    store = get_store(db_path)
+    from storage import get_database
+    store = get_database(db_path)
     guardrails = get_guardrails()
     monitor = get_monitor()
     evaluator = get_evaluator()
